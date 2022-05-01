@@ -15,26 +15,28 @@
 
     <div class="container">
         <h1 class="display-1 text-center text-dark mb-3">NASA API </h1>
+        <div class="form-outline form-black col-md-4">
+            <input type="date" id="formWhite" class="form-control" />
+            <label class="form-label" for="formWhite">Select a Date</label>
+        </div>
+        <button type="button" class="btn btn-primary col-sm-12 mt-4">Get Media</button>
         <div class="row">
-            <div class="col-md-8 mb-4 mb-md-0 ">
+            <div class="col-md-8 mb-4 mb-md-0 mt-4">
                 <div class="bg-image hover-zoom">
                     <a id="wrapper-hdurl" href="#!" target="_blank">
-
                         <img id="img-url" src="" class="w-100 mt-3" />
+                        <iframe class="vid w-100 h-100 mt-3" src="" frameborder="0"></iframe>
                     </a>
                 </div>
 
             </div>
             <div class="col-md-4 mt-3 mb-4 mb-md-0">
                 <h5 id="wrapper-title"></h5>
-                <p class="mb-2" id="copyright"></p>
                 <p class="text-uppercase" id="wrapper-explanation"></p>
 
 
             </div>
         </div>
-
-
     </div>
 
 

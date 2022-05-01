@@ -1,35 +1,40 @@
+document.querySelector('button').addEventListener('click', getMedia)
+document.querySelector('iframe').style.display = 'none'
+document.getElementById('img-url').style.display = 'none'
 
-let queryUrl = "https://api.nasa.gov/planetary/apod?"
-let queryKey = "api_key=iuxySVY1Cx7jNRPvyBaFJfcyPaR7MNT0NwZZew2c"
-let queryFull = queryUrl + queryKey
 
-//create an xml request object and save it as a variable 
-let xmlhttp = new XMLHttpRequest()
 
-//onready state property to specifiy a fucntion to excute everytime the status of the xmlhttp object changes
 
-xmlhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-        let data = JSON.parse(this.responseText)
+function getMedia() {
+    const choice = document.querySelector('input').value
+    const url = `https://api.nasa.gov/planetary/apod?api_key=qoemZgNaYZbUN53SI1SPx3pGdr94L7txEhpGoGg2&date=${choice}`
 
-        let copyright = data['copyright']
-        let date = data['date']
-        let explanation = data['explanation']
-        let hdurl = data['hdurl']
-        let media_type = data['media_type']
-        let title = data['title']
-        let url = data['url']
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            if (data.media_type === 'image') {
 
-        document.getElementById('img-url').src = url
-        document.getElementById('wrapper-title').innerText = title
-        document.getElementById('copyright').innerText = copyright
-        document.getElementById('wrapper-explanation').innerText = explanation
-        document.getElementById('wrapper-hdurl').href = hdurl
+                document.getElementById('img-url').src = data.url
+                document.getElementById('wrapper-title').innerText = data.title
+                document.getElementById('wrapper-explanation').innerText = data.explanation
+                document.querySelector('iframe').style.display = 'none'
+                document.getElementById('img-url').style.display = 'block'
 
-    }
+
+            } else if (data.media_type === 'video') {
+                document.getElementById('img-url').style.display = 'none'
+                document.querySelector('iframe').style.display = 'block'
+                document.querySelector('iframe').src = data.url
+                document.getElementById('wrapper-title').innerText = data.title
+                document.getElementById('wrapper-explanation').innerText = data.explanation
+
+
+            }
+
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
 }
-
-xmlhttp.open('GET', queryFull, true)
-xmlhttp.send()
-
-
